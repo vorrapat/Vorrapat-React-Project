@@ -12,9 +12,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
 import {useState} from "react";
 import axios from "axios";
+
 
 function Copyright(props) {
   return (
@@ -42,24 +42,27 @@ export default function SignUp() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const response = await axios.post(process.env.REACT_APP_BASE_URL+'/register',
-            {
-                username,
-                password,
-                firstName,
-                lastName
+        try{
+            const response = await axios.post(process.env.REACT_APP_BASE_URL+'/register',
+                {
+                    username,
+                    password,
+                    firstName,
+                    lastName
+                }
+            )
+            const result = response.data;
+            console.log(result);
+            alert(result['message']);
+
+            if(result['status'] === true){
+                window.location.href = '/';
             }
-        );
 
-        const result = response.data;
-        console.log(result);
-        alert(result['message']);
-
-        if(result['status'] === true){            
-            window.location.href = '/';
+        }catch(err){
+            console.log(err)
         }
     }
-
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -88,9 +91,9 @@ export default function SignUp() {
                   fullWidth
                   id="firstName"
                   label="First Name"
-                  value={firstName}
-                  onChange={ (e) => setFirstName(e.target.value) }
                   autoFocus
+                  value={firstName}
+                  onChange={ (e) => setFirstName(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -100,9 +103,9 @@ export default function SignUp() {
                   id="lastName"
                   label="Last Name"
                   name="lastName"
-                  value={lastName}
-                  onChange={ (e) => setLastName(e.target.value) }
                   autoComplete="family-name"
+                  value={lastName}
+                  onChange={ (e) => setLastName(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>

@@ -32,7 +32,7 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
-export default function SignIn() {
+export default function Signin() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -41,7 +41,7 @@ export default function SignIn() {
 
         const response = await axios.post(process.env.REACT_APP_BASE_URL+'/login',
             {
-                username,
+                username, 
                 password
             }
         );
@@ -55,7 +55,6 @@ export default function SignIn() {
             window.location.href = '/';
         }
     }
-
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -83,9 +82,9 @@ export default function SignIn() {
               label="User Name"
               name="username"
               autoComplete="username"
-              autoFocus              
               value={username}
               onChange={ (e) => setUsername(e.target.value) }
+              autoFocus
             />
             <TextField
               margin="normal"
